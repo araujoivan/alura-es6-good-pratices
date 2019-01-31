@@ -6,15 +6,15 @@ class Deal { //ECMA SCRPIT 6
         this._date = new Date(date.getTime())
         this._quantity = quantity
         this._value = value
-        Object.freeze(this) //become this instance totally final
+        Object.freeze(this) //it becomes this instance totally final
     }
 
     get volume() {
         return  this._value * this._quantity
     }
 
-    //access like a propoerty
-    // ex:  negocicao.date
+    //it allows access like a property
+    // ex:  deal.date
     get date() {
 
         // defensive programming techinique
