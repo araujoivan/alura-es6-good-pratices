@@ -2,7 +2,7 @@ class DealController {
 
     constructor() {
 
-        // it doesnt work because the querySelector execution context "this"
+        // it doesnt' work because the querySelector execution context "this"
         // is document. When attributing querySelector to $ pointer it loose this context
         // let $ = document.querySelector
         // Solution ?   usinng bind function I can pass the execution context by parameter 
@@ -12,9 +12,15 @@ class DealController {
         this._date = $('#data')
         this._quantity = $('#quantidade')
         this._value = $('#valor')
-        this._dealList = new DealList()
+
         this._messageView = new MessageView($('#messageView'))
         this._dealView = new DealView($('#dealView'))
+
+
+        // Arrow functions has a lexical scope.. for this reason, the "this" is
+        // referencing the context which was in that moment of creation while
+        // using function() the scope become dynamic
+        this._dealList = new DealList(model => this._dealView.update(model))
 
         this._dealView.update(this._dealList)
         this._message = new Message()
@@ -29,12 +35,17 @@ class DealController {
 
         this._clearForm()
 
-        this._dealView.update(this._dealList)
+        this._showMessage('Negotiation added successfuly!')   
+    }
 
-        this._message.text = 'Negotiation added successfuly!'
+    erase() {
+        this._dealList.eraseList()
+        this._showMessage('Negotiations erased successfuly!')
+    }
 
+    _showMessage(message) {
+        this._message.text = message
         this._messageView.update(this._message)
-      
     }
 
     _createDeal() {
