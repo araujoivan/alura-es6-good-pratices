@@ -1,10 +1,12 @@
 class Message {
 
     //passing a default value to constructor
-    constructor(text='') {
+    constructor(text = '') {
         this._text = text
     }
 
+    //get and set are acccessed as properties and not as methods
+    // ex: message.text = 'Hi'
     get text() {
         return this._text
     }

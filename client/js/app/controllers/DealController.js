@@ -20,12 +20,27 @@ class DealController {
         // Arrow functions has a lexical scope.. for this reason, the "this" is
         // referencing the context which was in that moment of creation while
         // using function() the scope become dynamic
-        this._dealList = new DealList(model => this._dealView.update(model))
+        // this._dealList = new DealList(model => this._dealView.update(model))
+
+
+        // Implementing Proxy approach to enable updating view
+        // We want to update view after a model change
+
+        this._dealList = ProxyFactory.create(
+            new DealList(),
+            ['add', 'eraseList'],
+            (model) => this._dealView.update(model))
 
         this._dealView.update(this._dealList)
-        this._message = new Message()
-        this._messageView.update(this._message)
         
+        this._message = ProxyFactory.create(
+            new Message(),
+            ['text'],
+            (model) => this._messageView.update(model)
+        )
+
+        this._messageView.update(this._message)
+  
     }
 
     add(event) {
@@ -35,17 +50,12 @@ class DealController {
 
         this._clearForm()
 
-        this._showMessage('Negotiation added successfuly!')   
+        this._message.text = 'Negotiation added successfuly!'
     }
 
     erase() {
         this._dealList.eraseList()
-        this._showMessage('Negotiations erased successfuly!')
-    }
-
-    _showMessage(message) {
-        this._message.text = message
-        this._messageView.update(this._message)
+        this._message.text = 'Negotiations erased successfuly!'
     }
 
     _createDeal() {
@@ -65,4 +75,25 @@ class DealController {
         this._date.focus()
 
     }
+
+    /*
+        In a literal object like the one bellow...
+        
+        let objeto = {
+            exibeMensagem : function(){
+                console.log("Hi");
+            }
+        }  
+
+        ------- OR -------
+        
+        we can simplify the method declaration like this one
+
+        let objeto = {
+            exibeMensagem {
+                console.log("Hi");
+            }
+        }
+
+    */
 }
