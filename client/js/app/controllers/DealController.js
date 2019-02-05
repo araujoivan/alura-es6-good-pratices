@@ -13,34 +13,27 @@ class DealController {
         this._quantity = $('#quantidade')
         this._value = $('#valor')
 
-        this._messageView = new MessageView($('#messageView'))
-        this._dealView = new DealView($('#dealView'))
-
+        this._currentOrder = ''
 
         // Arrow functions has a lexical scope.. for this reason, the "this" is
         // referencing the context which was in that moment of creation while
         // using function() the scope become dynamic
         // this._dealList = new DealList(model => this._dealView.update(model))
 
-
         // Implementing Proxy approach to enable updating view
         // We want to update view after a model change
 
-        this._dealList = ProxyFactory.create(
+        this._dealList = new Bind(
             new DealList(),
-            ['add', 'eraseList'],
-            (model) => this._dealView.update(model))
-
-        this._dealView.update(this._dealList)
-        
-        this._message = ProxyFactory.create(
-            new Message(),
-            ['text'],
-            (model) => this._messageView.update(model)
+            new DealView($('#dealView')),
+            'add', 'eraseList', 'sort', 'reverse'
         )
-
-        this._messageView.update(this._message)
-  
+        
+        this._message = new Bind(
+            new Message(),
+            new MessageView($('#messageView')),
+            'text'
+        )  
     }
 
     add(event) {
@@ -73,6 +66,32 @@ class DealController {
         this._date.value = ''
         this._value.value = 0.0
         this._date.focus()
+
+    }
+
+    sort(column) {
+
+        if(this._currentOrder == column) {
+            this._dealList.reverse()
+        } else {
+            this._dealList.sort((a, b) => a[column] - b[column])
+        }
+        this._currentOrder = column    
+    }
+
+    importDeals() {
+
+        let dealService = new DealService()
+
+        Promise.all([
+            dealService.getDealsFromWeek(),
+            dealService.getDealsFromOneWeekAgo(),
+            dealService.getDealsFromTwoWeeksAgo()
+        ]).then(resp => {
+            resp.reduce((accum, value) => accum.concat(value), []).forEach(this._dealList.add)
+            this._message.text = 'Negotiations has imported successfully'
+
+        }).catch(error => this._message.text = error)
 
     }
 

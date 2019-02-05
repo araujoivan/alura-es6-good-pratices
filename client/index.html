@@ -11,7 +11,7 @@
     
     <h1 class="text-center">Negotiations</h1>
     <div id="messageView"></div>
-    <form class="form" onsubmit="dealControlller.add(event)">
+    <form class="form" onsubmit="dealController.add(event)">
         
         <div class="form-group">
             <label for="data">Date</label>
@@ -32,10 +32,10 @@
     </form>
     
     <div class="text-center">
-        <button class="btn btn-primary text-center" type="button">
+        <button onclick="dealController.importDeals()" class="btn btn-primary text-center" type="button">
             Import Negotiations
         </button>
-        <button onclick="dealControlller.erase()" class="btn btn-primary text-center" type="button">
+        <button onclick="dealController.erase()" class="btn btn-primary text-center" type="button">
             Delete
         </button>
     </div> 
@@ -53,8 +53,11 @@
     <script src="./js/app/views/DealView.js"></script>
     <script src="./js/app/views/MessageView.js"></script>
     <script src="./js/app/services/ProxyFactory.js"></script>
+    <script src="./js/app/services/DealService.js"></script>
+    <script src="./js/app/services/HttpService.js"></script>
+    <script src="./js/app/helpers/Bind.js"></script>
     <script>
-        let dealControlller = new DealController()
+        let dealController = new DealController()
     </script>
 </body>
 </html>

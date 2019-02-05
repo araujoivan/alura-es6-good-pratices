@@ -25,6 +25,13 @@ class DealList {
        // this.updateViewCallback(this)
     }
 
+    sort(criteria) {
+        this._deals.sort(criteria)
+    }
+
+    reverse() {
+        this._deals.reverse()
+    }
 }
 
 /*

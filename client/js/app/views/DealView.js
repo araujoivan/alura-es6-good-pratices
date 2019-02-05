@@ -6,10 +6,10 @@ class DealView extends GenericView {
         <table class="table table-hover table-bordered">
             <thead>
                 <tr>
-                    <th>DATE</th>
-                    <th>QUANTITY</th>
-                    <th>VALUE</th>
-                    <th>VOLUME</th>
+                    <th onclick="dealController.sort('date')">DATE</th>
+                    <th onclick="dealController.sort('quantity')">QUANTITY</th>
+                    <th onclick="dealController.sort('value')">VALUE</th>
+                    <th onclick="dealController.sort('volume')">VOLUME</th>
                 </tr>
             </thead>
             
