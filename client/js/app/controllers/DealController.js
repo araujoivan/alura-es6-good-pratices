@@ -33,22 +33,47 @@ class DealController {
             new Message(),
             new MessageView($('#messageView')),
             'text'
-        )  
+        ) 
+
+        this._dealService = new DealService()
+
+        this._init()
+
+    }
+
+    _init() {
+
+        this._dealService.findAll()
+            .then(deals => deals.forEach(this._dealList.add))
+            .catch(error => this._message.text = error)
+
+        setInterval(() => {
+            this.importDeals()
+
+        }, 5000)
     }
 
     add(event) {
+
         event.preventDefault()
 
-        this._dealList.add(this._createDeal())
-
-        this._clearForm()
-
-        this._message.text = 'Negotiation added successfuly!'
+        this._dealService.save(this._createDeal())
+            .then((deal) => {
+                this._dealList.add(deal)
+                this._message.text = 'Negotiation added successfuly!'
+                this._clearForm()
+            })
+            .catch(error => this._message.text = error)
     }
 
     erase() {
-        this._dealList.eraseList()
-        this._message.text = 'Negotiations erased successfuly!'
+
+        this._dealService.deleteAll()
+            .then(message => {
+                this._dealList.eraseList()
+                this._message.text = message
+            })
+            .catch(error => this._message.text = error)
     }
 
     _createDeal() {
@@ -56,8 +81,8 @@ class DealController {
         
         return new Deal(
             theDate, 
-            this._quantity.value, 
-            this._value.value
+            parseInt(this._quantity.value), 
+            parseFloat(this._value.value)
         )
     }
 
@@ -80,19 +105,10 @@ class DealController {
     }
 
     importDeals() {
-
-        let dealService = new DealService()
-
-        Promise.all([
-            dealService.getDealsFromWeek(),
-            dealService.getDealsFromOneWeekAgo(),
-            dealService.getDealsFromTwoWeeksAgo()
-        ]).then(resp => {
-            resp.reduce((accum, value) => accum.concat(value), []).forEach(this._dealList.add)
-            this._message.text = 'Negotiations has imported successfully'
-
-        }).catch(error => this._message.text = error)
-
+        // always break arrow functions after => 
+        this._dealService.importAll(this._dealList.deals)
+            .then(deals => deals.forEach(this._dealList.add))
+            .catch(error => this._message.text = error)
     }
 
     /*

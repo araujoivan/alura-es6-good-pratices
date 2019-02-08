@@ -10,7 +10,7 @@ class Deal { //ECMA SCRPIT 6
     }
 
     get volume() {
-        return  this._value * this._quantity
+        return  this._value * this._quantity;
     }
 
     //it allows access like a property

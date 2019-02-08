@@ -32,9 +32,10 @@
     </form>
     
     <div class="text-center">
+        <!--
         <button onclick="dealController.importDeals()" class="btn btn-primary text-center" type="button">
             Import Negotiations
-        </button>
+        </button> -->
         <button onclick="dealController.erase()" class="btn btn-primary text-center" type="button">
             Delete
         </button>
@@ -55,7 +56,9 @@
     <script src="./js/app/services/ProxyFactory.js"></script>
     <script src="./js/app/services/DealService.js"></script>
     <script src="./js/app/services/HttpService.js"></script>
+    <script src="./js/app/services/ConnectionFactory.js"></script>
     <script src="./js/app/helpers/Bind.js"></script>
+    <script src="./js/app/dao/DealDao.js"></script>
     <script>
         let dealController = new DealController()
     </script>

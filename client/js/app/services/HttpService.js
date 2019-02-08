@@ -1,5 +1,23 @@
 class HttpService {
 
+
+    _handleErrors(res) {
+
+        if(!res.ok) throw new Error(res.statusText)
+
+        return res
+    }
+
+    // Using Fetch Ajax api from ES 2016
+    // You cant call off the request
+    get(url) {
+        return fetch(url)
+                .then(this._handleErrors)
+                .then(res => res.json())
+    }
+
+
+    /*
     get(url) {
 
         return new Promise((resolve, reject) => {
@@ -29,7 +47,7 @@ class HttpService {
     
             xhr.send()
         })
-    }
+    } */
 
     post(url, data) {
 

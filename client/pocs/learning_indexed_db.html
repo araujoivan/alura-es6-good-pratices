@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Learning Indexed DB</title>
+</head>
+<script src="js/app/models/Deal.js"></script>
+<script>
+
+    // it can be refused                    databaseName, version
+    // change the version if you want to apply any change in the database structure
+    // open Application tab in the chrome devtools
+    var openRequest = window.indexedDB.open('databaseName', 3)
+
+    var connection
+
+    openRequest.onupgradeneeded = (ev) => {
+        console.log('Create or modify an existent database')
+        //create an object store..a  table withoud schema
+
+        var myConnection = ev.target.result
+
+        if(myConnection.objectStoreNames.contains('deals')) {
+            myConnection.deleteObjectStore('deals')
+        }
+
+        myConnection.createObjectStore('deals', {
+            autoIncrement: true
+        })
+
+    }
+
+    openRequest.onsuccess = (ev) => {
+        console.log('Connection established!')
+
+        connection = ev.target.result
+    }
+
+    openRequest.onerror = (ev) => {
+        console.log(err.target.error)
+    }
+
+    function listAll() {
+        // get the transaction                          or  'readwrite'
+        let transaction = connection.transaction(['deals'], 'readonly')
+
+        // get object store
+        let store = transaction.objectStore('deals')
+
+        let cursor = store.openCursor()
+
+        let deals = []
+        cursor.onsuccess = e => {
+            // pointer to the current register in database
+            let current = e.target.result
+
+            if(!!current) {
+                let data = current.value
+
+                deals.push(new Deal(data._date, data._quantity, data._value))
+                
+                current.continue()
+
+            } else {
+                console.log(deals)
+            }
+        }
+
+        cursor.onerror = e => {
+            console.log(e.target.error.name)
+        }
+
+    }
+
+    function add() {
+        // get the transaction                          or  'readonly'
+        let transaction = connection.transaction(['deals'], 'readwrite')
+
+        // get object store
+        let store = transaction.objectStore('deals')
+
+        let deal = new Deal(new Date(), 1, 200)
+
+        // return a request for the transaction
+        let request = store.add(deal)
+
+        request.onsuccess = e => {
+            console.log('Deal included successfully')
+        }
+
+        request.onerror = e => {
+
+        }
+    }
+
+</script>
+<body>
+    
+</body>
+</html>
