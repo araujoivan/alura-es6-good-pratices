@@ -11,3 +11,5 @@ A simple stock register form and a node server that provides a list of stocks.
    npm install
    npm run watch
    
+More information in client/notes.txt
+   
