@@ -1,4 +1,6 @@
-class MessageView  extends GenericView {
+import {GenericView} from './GenericView'
+
+export class MessageView  extends GenericView {
 
     // Unnecessary for this case, but elegant
     /* constructor(element) {

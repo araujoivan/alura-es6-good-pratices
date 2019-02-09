@@ -1,4 +1,4 @@
-class DealList {
+export class DealList {
 
     constructor() {
  // constructor(updateViewCallback) {

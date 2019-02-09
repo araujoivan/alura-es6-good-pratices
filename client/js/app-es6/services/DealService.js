@@ -1,4 +1,9 @@
-class DealService {
+import {HttpService} from './HttpService'
+import {ConnectionFactory} from './ConnectionFactory'
+import {Deal} from '../models/Deal'
+import {DealDao} from '../dao/DealDao'
+
+export class DealService {
 
     constructor() {
         this._http = new HttpService()

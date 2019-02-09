@@ -1,4 +1,4 @@
-class HttpService {
+export class HttpService {
 
 
     _handleErrors(res) {
@@ -16,6 +16,14 @@ class HttpService {
                 .then(res => res.json())
     }
 
+    post(url, data) {
+        return fetch(url, {
+            headers: {'Content-type' : 'application/json'},
+            method: 'post',
+            body: JSON.stringify(data)
+        })
+        .then(this._handleErrors)
+    }
 
     /*
     get(url) {
@@ -48,7 +56,8 @@ class HttpService {
             xhr.send()
         })
     } */
-
+   
+    /*
     post(url, data) {
 
         return new Promise((resolve, reject) => {
@@ -73,5 +82,5 @@ class HttpService {
             xhr.send(JSON.stringify(data))
         })
 
-    }
+    } */
 }

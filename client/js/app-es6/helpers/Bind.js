@@ -1,4 +1,6 @@
-class Bind {
+import {ProxyFactory} from '../services/ProxyFactory'
+
+export class Bind {
 
     // contructors can return any type of data
     // ... rest parameter similar to args in java

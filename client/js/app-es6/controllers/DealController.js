@@ -1,3 +1,12 @@
+import {DealView} from '../views/DealView'
+import {MessageView} from '../views/MessageView'
+import {Message} from '../models/Message'
+import {DealList} from '../models/DealList'
+import {Deal} from '../models/Deal'
+import {Bind} from '../helpers/Bind'
+import {DealService} from '../services/DealService'
+import {DateHelper} from '../helpers/DateHelper'
+
 class DealController {
 
     constructor() {
@@ -131,4 +140,10 @@ class DealController {
         }
 
     */
+}
+
+let dealController = new DealController()
+// Similar to singleton design pattern
+export function dealControllerInstance() {
+    return dealController
 }

@@ -1,3 +1,32 @@
+<!-- // 
+        Installing the node module babel
+        browse to client/
+        rename app to app-es6
+        create app folder again
+        npm init    // to create package.json 
+        npm install babel-preset-es2015 --save-dev  // --save-dev to register in package.json
+        create .babelrc with the following content:
+          {
+                "presets": ["es2015"]
+          }
+        in packeage.json add in scrips{...} "build": "babel js/app-es6 -d/app  --source-maps"
+                                            "watch": "babel js/app-es6 -d js/app --source-maps --watch"
+        npm run build  OR  npm run watch
+
+        //--source-maps makes a map which enables debugging into original source code
+        // this kind of file is download just when we open browser devetools
+        // it dismiss the use of source code in production
+
+
+        // wne using module load pattern we must install systemjs. Attention: using parameter --save
+        // without dev means that is a system depedency, not a devel dependency
+        //sudo npm install systemjs@0.19.31 --save
+
+        // installing babel module to enable the use of es-6 module pattern
+        // npm install babel-plugin-transform-es2015-modules-systemjs@6.9.0 --save-dev
+        // edit .babelrc adding  "plugins" : ["transform-es2015-modules-systemjs"]
+-->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +40,7 @@
     
     <h1 class="text-center">Negotiations</h1>
     <div id="messageView"></div>
-    <form class="form" onsubmit="dealController.add(event)">
+    <form class="form" >
         
         <div class="form-group">
             <label for="data">Date</label>
@@ -32,35 +61,23 @@
     </form>
     
     <div class="text-center">
-        <!--
+        <!-- Let's implement automatic loading
         <button onclick="dealController.importDeals()" class="btn btn-primary text-center" type="button">
             Import Negotiations
         </button> -->
-        <button onclick="dealController.erase()" class="btn btn-primary text-center" type="button">
+        <button class="btn btn-primary text-center" type="button">
             Delete
         </button>
     </div> 
     <br>
     <br>
     <div id="dealView"></div>
-
-    <script src="./js/app/models/Deal.js"></script>
-    <script src="./js/app/controllers/DealController.js"></script>
-    <script src="./js/app/helpers/DateHelper.js"></script>
-    <script src="./js/app/models/DealList.js"></script>
-    <script src="./js/app/models/Message.js"></script>
-    <!-- GenericView is the parent. Its declaration must come before others-->
-    <script src="./js/app/views/GenericView.js"></script>
-    <script src="./js/app/views/DealView.js"></script>
-    <script src="./js/app/views/MessageView.js"></script>
-    <script src="./js/app/services/ProxyFactory.js"></script>
-    <script src="./js/app/services/DealService.js"></script>
-    <script src="./js/app/services/HttpService.js"></script>
-    <script src="./js/app/services/ConnectionFactory.js"></script>
-    <script src="./js/app/helpers/Bind.js"></script>
-    <script src="./js/app/dao/DealDao.js"></script>
+    <script src="node_modules/systemjs/dist/system.js"></script>
     <script>
-        let dealController = new DealController()
+       System.defaultJSExtensions = true; // it allows ommit file extensions into import statements
+       System.import('js/app/boot').catch(function(err) {
+           console.log(err)
+       });
     </script>
 </body>
 </html>

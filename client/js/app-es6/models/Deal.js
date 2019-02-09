@@ -1,4 +1,4 @@
-class Deal { //ECMA SCRPIT 6
+export class Deal { //ECMA SCRPIT 6
 
     constructor(date, quantity, value) {
         // by convension underline is a private prefix

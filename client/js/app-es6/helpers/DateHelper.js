@@ -1,4 +1,4 @@
-class DateHelper {
+export class DateHelper {
 
     construct() {
         // avoiding the instatiation of this class. 

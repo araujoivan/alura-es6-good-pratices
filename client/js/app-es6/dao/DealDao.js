@@ -1,4 +1,6 @@
-class DealDao {
+import {Deal} from '../models/Deal'
+
+export class DealDao {
 
     constructor(connection) {
 

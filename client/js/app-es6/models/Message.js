@@ -1,4 +1,4 @@
-class Message {
+export class Message {
 
     //passing a default value to constructor
     constructor(text = '') {

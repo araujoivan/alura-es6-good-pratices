@@ -1,4 +1,4 @@
-class GenericView {
+export class GenericView {
     // Changing the Chrome Browser language
     //  exec defaults write com.google.Chrome AppleLanguages '(pt-BR)'
     constructor(element) {
