@@ -1,0 +1,28 @@
+
+    1) Installing the node module babel
+        1.1 browse to client/
+        1.2 rename app to app-es6
+        1.3 create app folder again
+        1.4 npm init    // to create package.json 
+        1.5 npm install babel-preset-es2015 --save-dev  // --save-dev to register in package.json
+        1.6 create .babelrc with the following content:
+            {
+                "presets": ["es2015"]
+            }
+    2) Adding mapping debug to babel resources
+
+        2.1 in packeage.json add in scrips{...} "build": "babel js/app-es6 -d/app  --source-maps"
+        2.2  for wacthing changes add           "watch": "babel js/app-es6 -d js/app --source-maps --watch"
+        2.3  npm run build  OR  npm run watch
+            //--source-maps makes a map which enables debugging into original source code
+            // this kind of file is download just when we open browser devetools
+            // it dismiss the use of source code in production
+
+    3) Using ES6 Module pattern
+
+        3.1 // when using module load pattern we must install systemjs. Attention: using parameter --save
+            // without dev means that is a system depedency, not a devel dependency
+            // sudo npm install systemjs@0.19.31 --save
+        3.2 // installing babel module to enable the use of es-6 module pattern
+            // npm install babel-plugin-transform-es2015-modules-systemjs@6.9.0 --save-dev
+            // edit .babelrc adding  "plugins" : ["transform-es2015-modules-systemjs"]
