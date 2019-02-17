@@ -1,5 +1,5 @@
 # es6-good-pratices
-Applying good es6 programming techiniques in a simple form
+Applying good es6 programming techiniques in a application for registring negotiations.
 
 A simple stock register form and a node server that provides a list of stocks.
 
